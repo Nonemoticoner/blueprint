@@ -71,6 +71,12 @@ export interface ITableProps extends IProps, IRowHeights, IColumnWidths {
     columnWidths?: number[];
 
     /**
+     * If true, all cells show a loading shimmer.
+     * @default false
+     */
+    isLoading?: boolean;
+
+    /**
      * If false, disables resizing of rows.
      * @default false
      */

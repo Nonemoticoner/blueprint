@@ -1,0 +1,44 @@
+// Copyright 2016 Palantir Technologies, Inc. All rights reserved.
+
+@mixin skeleton-margin($base-class-name, $margin) {
+  .#{$base-class-name}-skeleton-#{$margin} {
+    margin-right: percentage($margin / 100);
+  }
+}
+
+@mixin skeleton($base-class-name) {
+  @include skeleton-margin($base-class-name, 0);
+  @include skeleton-margin($base-class-name, 5);
+  @include skeleton-margin($base-class-name, 10);
+  @include skeleton-margin($base-class-name, 15);
+
+  .#{$base-class-name}-skeleton {
+    animation: 1.75s linear 0s infinite normal both running glow;
+    flex: 1;
+    height: $pt-grid-size - 4px;
+    border-radius: 2px;
+  }
+}
+
+@mixin cell-loading($base-class-name) {
+  .#{$base-class-name}.#{$base-class-name}-loading {
+    display: flex;
+    align-items: center;
+  }
+
+  @include skeleton($base-class-name);
+}
+
+@keyframes glow {
+  0% {
+    background-color: $light-gray3;
+  }
+
+  50% {
+    background-color: $light-gray1;
+  }
+
+  100% {
+    background-color: $light-gray3;
+  }
+}

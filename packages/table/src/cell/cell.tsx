@@ -11,7 +11,9 @@ import * as React from "react";
 
 import { Classes, IIntentProps, IProps } from "@blueprintjs/core";
 
-export interface ICellProps extends IIntentProps, IProps {
+import { ILoadableCell, renderLoadingSkeleton } from "../common/loading";
+
+export interface ICellProps extends IIntentProps, ILoadableCell, IProps {
     key?: string;
 
     style?: React.CSSProperties;
@@ -29,9 +31,18 @@ export const emptyCellRenderer = (_rowIndex: number, _columnIndex: number) => <C
 @PureRender
 export class Cell extends React.Component<ICellProps, {}> {
     public render() {
-        const { style, tooltip, className } = this.props;
-        const content = (<div className="bp-table-truncated-text">{this.props.children}</div>);
-        const classes = classNames("bp-table-cell", className, Classes.intentClass(this.props.intent));
+        const { style, isLoading, tooltip, className } = this.props;
+        const content = isLoading
+            ? renderLoadingSkeleton()
+            : (<div className="bp-table-truncated-text">{this.props.children}</div>);
+        const classes = classNames(
+            "bp-table-cell",
+            {
+                "bp-table-cell-loading": isLoading,
+            },
+            Classes.intentClass(this.props.intent),
+            className
+        );
         return (<div className={classes} style={style} title={tooltip}>{content}</div>);
     }
 }
